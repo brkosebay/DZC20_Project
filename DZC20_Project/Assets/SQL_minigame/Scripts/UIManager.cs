@@ -1,6 +1,8 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using System.Collections.Generic;
+using System.Text;
 
 public class UIManager : MonoBehaviour
 {
@@ -19,34 +21,44 @@ public class UIManager : MonoBehaviour
 
     }
 
-    // Call this method to display the narrative in the UI
     public void DisplayNarrative(string narrative)
     {
         narrativeText.text = narrative;
     }
 
-    // Call this method to display query results in the UI
+    public void DisplayLocationResults(List<LocationResult> results)
+    {
+        StringBuilder resultStringBuilder = new StringBuilder();
+        foreach (var result in results)
+        {
+            resultStringBuilder.AppendLine(result.ToString());
+        }
+        resultText.text = resultStringBuilder.ToString();
+    }
+
+    public void DisplaySightingResults(List<SightingResult> results)
+    {
+        StringBuilder resultStringBuilder = new StringBuilder();
+        foreach (var result in results)
+        {
+            resultStringBuilder.AppendLine(result.ToString());
+        }
+        resultText.text = resultStringBuilder.ToString();
+    }
+
     public void DisplayResults(string results)
     {
         resultText.text = results;
     }
 
-    // Invoked when the submit button is clicked
     private void OnSubmitButtonClicked()
     {
         string query = queryInputField.text;
-
         if (!string.IsNullOrEmpty(query))
         {
             gameController.OnQuerySubmitted(query);
+            queryInputField.text = ""; // Clear the input field
         }
-        else
-        {
-            DisplayResults("Please enter a query.");
-        }
-
-        // Optionally, clear the input field after submission
-        queryInputField.text = "";
     }
 
     public void ShowContinueButton(bool show)

@@ -1,17 +1,25 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 
 public class GameController : MonoBehaviour
 {
-    public UIManager uiManager;
     public QueryManager queryManager;
-    
+    public UIManager uiManager;
+
+    private GameState currentState;
     private int currentStoryIndex = 0;
-    private string[] storySegments; // Populate this array with your story segments
-    private bool isGameOver = false;
+    private string[] storySegments;
 
     void Start()
     {
-        // Initialize the story segments based on the "Lost Laptop" narrative
+        InitializeStorySegments();
+        currentState = GameState.LocationQuery; // Set initial game state
+        uiManager.DisplayNarrative(storySegments[currentStoryIndex]);
+    }
+
+    void InitializeStorySegments()
+    {
         storySegments = new string[] {
             "You receive a panicked message from Alex, your friend: 'Hey, I can't find my laptop! I had it in my last class. Can you help me look for it?' You agree to help and decide to start by finding out where Alex's last class was.",
             "You decide to start at Alex's last class. Query the database to find out where it was.",
@@ -23,71 +31,105 @@ public class GameController : MonoBehaviour
             "You rush to the campus security office. One last query should confirm if the laptop is there...",
             "The query confirms it! The laptop was turned into campus security, and Alex can finally breathe a sigh of relief. Well done!"
         };
-
-        // Display the first part of the story
-        uiManager.DisplayNarrative(storySegments[currentStoryIndex]);
     }
 
-    // Call this method when a query is submitted
     public void OnQuerySubmitted(string query)
     {
-        if (isGameOver) return;
-
-        queryManager.ExecuteQuery(query, OnQueryResultReceived);
-    }
-
-    // Callback for when query results are received
-    private void OnQueryResultReceived(string result)
-    {
-        // Process the result and determine if the story should advance
-        bool shouldAdvanceStory = CheckQueryResult(result);
-
-        if (shouldAdvanceStory)
+        switch (currentState)
         {
-            AdvanceStory();
-        }
-        else
-        {
-            uiManager.DisplayResults(result);
+            case GameState.LocationQuery:
+                queryManager.ExecuteLocationQuery(query, HandleLocationQueryResults);
+                break;
+            case GameState.SightingQuery:
+                queryManager.ExecuteSightingQuery(query, HandleSightingQueryResults);
+                break;
+            // Add additional cases for other query types if needed
         }
     }
 
-    // Check the query result to determine if it should advance the story
-    private bool CheckQueryResult(string result)
+ private void HandleLocationQueryResults(List<LocationResult> results)
+{
+    // Assuming "Classroom" is the expected answer for segment 1
+    string expectedAnswer = expectedLocationAnswers[currentStoryIndex];
+    bool isCorrectAnswer = (results.Count == 1) && (results[0].name == expectedAnswer);
+
+    if (isCorrectAnswer)
     {
-        // Implement your logic here to decide if the result should advance the story
-        // For example, check if a certain key piece of information was uncovered
-
-        return false; // Change this based on your game logic
+        // Correct answer, advance the story
+        uiManager.DisplayLocationResults(results);
+        AdvanceStory();
     }
-
-    // Call this method at the end of segments that don't require a query
-    private void ShowContinueForNextSegment()
+    else
     {
-        uiManager.ShowContinueButton(true);
+        // Incorrect answer, do not advance the story
+        uiManager.DisplayResults("That's not the location we are looking for. Try again.");
     }
+}
 
-    // Advance the story to the next segment
+private void HandleSightingQueryResults(List<SightingResult> results)
+{
+    // Assuming "Library" is the expected answer for a certain segment
+    string expectedAnswer = expectedSightingAnswers[currentStoryIndex];
+    bool isCorrectAnswer = (results.Count == 1) && (results[0].location_id == expectedAnswer);
+
+    if (isCorrectAnswer)
+    {
+        // Correct answer, advance the story
+        uiManager.DisplaySightingResults(results);
+        AdvanceStory();
+    }
+    else
+    {
+        // Incorrect answer, do not advance the story
+        uiManager.DisplayResults("No relevant sightings found. Try again.");
+    }
+}
+
+
     public void AdvanceStory()
     {
         currentStoryIndex++;
-        uiManager.ShowContinueButton(false);
-
         if (currentStoryIndex < storySegments.Length)
         {
             uiManager.DisplayNarrative(storySegments[currentStoryIndex]);
+            UpdateGameState(); // Update game state based on new story segment
         }
         else
         {
-            GameOver();
+            uiManager.DisplayNarrative("Congratulations! You've solved the mystery.");
+            // Handle game completion
         }
     }
 
-    // Handle the end of the game
-    private void GameOver()
+    private void UpdateGameState()
     {
-        isGameOver = true;
-        uiManager.DisplayNarrative("Congratulations! You've solved the mystery.");
-        // Add any additional game over logic here
+        // Update the game state based on the current story segment
+        // For example:
+        if (currentStoryIndex == 2)
+        {
+            currentState = GameState.SightingQuery;
+        }
+        // Add additional logic to update the game state as needed
     }
+
+    private Dictionary<int, string> expectedLocationAnswers = new Dictionary<int, string>
+    {
+        { 1, "Classroom" }, // Assuming segment 2 expects "Jefferson Hall"
+        // Add other segment-to-answer mappings
+    };
+
+    private Dictionary<int, string> expectedSightingAnswers = new Dictionary<int, string>
+    {
+        { 4, "Library" }, // Assuming segment 4 expects a sighting in "Library"
+        // Add other segment-to-answer mappings
+    };
+}
+
+
+
+public enum GameState
+{
+    LocationQuery,
+    SightingQuery
+    // Add additional game states as needed
 }

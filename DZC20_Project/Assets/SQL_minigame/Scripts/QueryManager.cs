@@ -2,6 +2,7 @@ using UnityEngine;
 using SQLite4Unity3d;
 using System.Text;
 using System.Collections.Generic;
+using System;
 
 public class QueryManager : MonoBehaviour
 {
@@ -15,39 +16,32 @@ public class QueryManager : MonoBehaviour
         _database = new SQLiteConnection(databasePath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
     }
 
-    public void ExecuteQuery(string query, System.Action<string> onQueryExecuted)
+    public void ExecuteLocationQuery(string query, System.Action<List<LocationResult>> onQueryExecuted)
+{
+    try
     {
-        StringBuilder queryResult = new StringBuilder();
-
-        try
-        {
-            // Execute the query and get the results
-            var results = _database.Query<QueryResult>(query);
-
-            // Process the results
-            if (results != null && results.Count > 0)
-            {
-                foreach (var result in results)
-                {
-                    // Assuming QueryResult is a class representing your query result
-                    // You will need to define this class based on your query structure
-                    Debug.Log(result);
-                    queryResult.AppendLine(result.ToString());
-                }
-            }
-            else
-            {
-                queryResult.AppendLine("No results found.");
-            }
-
-            onQueryExecuted?.Invoke(queryResult.ToString());
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError("Query Execution Error: " + e.Message);
-            onQueryExecuted?.Invoke("Error executing query: " + e.Message);
-        }
+        var results = _database.Query<LocationResult>(query);
+        Debug.Log(results);
+        onQueryExecuted?.Invoke(results);
     }
+    catch (System.Exception e)
+    {
+        Debug.LogError("Location Query Execution Error: " + e.Message);
+    }
+}
+
+public void ExecuteSightingQuery(string query, System.Action<List<SightingResult>> onQueryExecuted)
+{
+    try
+    {
+        var results = _database.Query<SightingResult>(query);
+        onQueryExecuted?.Invoke(results);
+    }
+    catch (System.Exception e)
+    {
+        Debug.LogError("Sighting Query Execution Error: " + e.Message);
+    }
+}
 
     private void OnDestroy()
     {
@@ -58,27 +52,57 @@ public class QueryManager : MonoBehaviour
     }
 }
 
-public class QueryResult
+public class LocationResult
 {
-    // Assuming a generic structure that might hold a column from any table
-    // You can expand this with more properties as per your query requirements
-
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string MajorOrSubject { get; set; } // Could be Major (for Students) or Subject (for Classes)
-    public string LocationName { get; set; } // For Locations
-    public string Time { get; set; } // For LaptopSightings
+    public string name { get; set; }
 
     public override string ToString()
     {
-        StringBuilder sb = new StringBuilder();
-        if (Id != 0) sb.AppendLine("Id: " + Id);
-        if (!string.IsNullOrEmpty(Name)) sb.AppendLine("Name: " + Name);
-        if (!string.IsNullOrEmpty(MajorOrSubject)) sb.AppendLine("Major/Subject: " + MajorOrSubject);
-        if (!string.IsNullOrEmpty(LocationName)) sb.AppendLine("Location: " + LocationName);
-        if (!string.IsNullOrEmpty(Time)) sb.AppendLine("Time: " + Time);
-
-        return sb.ToString();
+        return "Location: " + name;
     }
 }
+
+public class ClassResult
+{
+    public string name { get; set; }
+    public string professor_id { get; set; }
+
+    public override string ToString()
+    {
+        return "Class Name: " + name + ", Professor ID: " + professor_id;
+    }
+}
+
+public class ProfessorResult
+{
+    public string name { get; set; }
+
+    public override string ToString()
+    {
+        return "Professor Name: " + name ;
+    }
+}
+
+public class StudentResult
+{
+    public string name { get; set; }
+    public string major { get; set; }
+
+    public override string ToString()
+    {
+        return "Student Name: " + name + ", Major: " + major;
+    }
+}
+
+public class SightingResult
+{
+    public string Time { get; set; }
+    public string location_id { get; set; }
+    public string witness_id { get; set; }
+    public override string ToString()
+    {
+        return "Time: " + Time + ", Location ID: " + location_id + ", Witness ID: " + witness_id;
+    }
+}
+
 
