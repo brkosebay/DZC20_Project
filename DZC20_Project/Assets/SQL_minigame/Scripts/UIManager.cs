@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using System.Text;
+using System.Collections;
 
 public class UIManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class UIManager : MonoBehaviour
     public Button submitButton;
     public Button continueButton;
     public GameController gameController;
+    public GameObject hintBubblePanel;
+    public TextMeshProUGUI hintText;
 
     void Start()
     {
@@ -49,6 +52,20 @@ public class UIManager : MonoBehaviour
     public void DisplayResults(string results)
     {
         resultText.text = results;
+    }
+
+    public void ShowHintBubble(string message)
+    {
+        hintText.text = message;
+        hintBubblePanel.SetActive(true);
+        StartCoroutine(HideHintBubbleAfterDelay(15f)); 
+    }
+
+    // Coroutine to hide the hint bubble after a delay
+    private IEnumerator HideHintBubbleAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        hintBubblePanel.SetActive(false);
     }
 
     private void OnSubmitButtonClicked()
