@@ -18,8 +18,9 @@ public class CharacterController2D : MonoBehaviour
 	private Rigidbody2D m_Rigidbody2D;
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 m_Velocity = Vector3.zero;
+    private bool m_FacingUp = true;
 
-	[Header("Events")]
+    [Header("Events")]
 	[Space]
 
 	public UnityEvent OnLandEvent;
@@ -127,7 +128,27 @@ public class CharacterController2D : MonoBehaviour
 				// ... flip the player.
 				Flip();
 			}
-		}
+
+            if (verticalMove != 0)
+            {
+                // If the input is moving the player upwards...
+                if (verticalMove > 0 && !m_FacingUp)
+                {
+                    // ... flip the player to face upwards.
+                    FlipVertical();
+                }
+                // Otherwise if the input is moving the player downwards and the player is facing up...
+                else if (verticalMove < 0 && m_FacingUp)
+                {
+                    // ... flip the player to face downwards.
+                    FlipVertical();
+                }
+            }
+            else if (!m_FacingUp) // If there is no vertical movement and the character is not facing up, flip to face up
+            {
+                FlipVertical();
+            }
+        }
 		// If the player should jump...
 		if (m_Grounded && jump)
 		{
@@ -148,4 +169,15 @@ public class CharacterController2D : MonoBehaviour
 		theScale.x *= -1;
 		transform.localScale = theScale;
 	}
+
+    private void FlipVertical()
+    {
+        // Switch the way the player is labelled as facing vertically.
+        m_FacingUp = !m_FacingUp;
+
+        // Multiply the player's y local scale by -1.
+        Vector3 theScale = transform.localScale;
+        theScale.y *= -1;
+        transform.localScale = theScale;
+    }
 }

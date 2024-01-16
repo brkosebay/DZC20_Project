@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public CharacterController2D controller;
+    public Animator animator;
 
     float horizontalMove = 0f;
     float verticalMove = 0f; // Variable for vertical movement
@@ -28,6 +29,9 @@ public class PlayerMovement : MonoBehaviour
         // Get horizontal and vertical input
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
         verticalMove = Input.GetAxisRaw("Vertical") * runSpeed;
+
+        animator.SetFloat("Speed_Horizontal", Mathf.Abs(horizontalMove));
+        animator.SetFloat("Speed_Vertical", Mathf.Abs(verticalMove));
     }
 
     private void FixedUpdate()
