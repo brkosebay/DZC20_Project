@@ -1,0 +1,26 @@
+segment 1: 
+query: SELECT name FROM Locations WHERE id = 1;
+hints: "You need to find the name of a location. Use the SELECT statement."
+"Look in the Locations table for the location where id equals 1."
+"Use WHERE to specify the condition: id = 1 in the Locations table."
+
+segment 3:
+query: SELECT time FROM LaptopSightings
+WHERE location_id = (SELECT id FROM Locations WHERE name = 'Library')
+hints: "You're looking for sightings at a specific location. The LaptopSightings table has this information."
+"Use SELECT to get the time from LaptopSightings where the laptop was seen."
+"The library's location_id is 2. Use this in your WHERE clause."
+
+segment 5: 
+query: SELECT time FROM LaptopSightings
+WHERE location_id = (SELECT id FROM Locations WHERE name = 'Cafeteria');
+hints: "Find out when the laptop was seen in the cafeteria using the LaptopSightings table."
+"You need to SELECT the time column."
+"The cafeteria is identified by location_id 3 in your WHERE clause."
+
+segment 7:
+query: SELECT 'Campus Security' FROM LaptopSightings
+WHERE location_id IS '4' AND description LIKE '%laptop%';
+hints: "To confirm if the laptop is at campus security, look in the LaptopSightings table."
+"Use the SELECT statement to find out if the laptop was seen in Campus Security."
+"The location_id for campus security is 4. Use this in the WHERE clause."

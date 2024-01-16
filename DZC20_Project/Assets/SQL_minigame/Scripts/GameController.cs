@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Experimental.GraphView;
 
 public class GameController : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class GameController : MonoBehaviour
     private GameState currentState;
     private int currentStoryIndex = 0;
     private string[] storySegments;
+    private Dictionary<int, string[]> hintsDictionary;
 
     void Start()
     {
@@ -31,6 +33,12 @@ public class GameController : MonoBehaviour
             "You rush to the campus security office. One last query should confirm if the laptop is there...",
             "The query confirms it! The laptop was turned into campus security, and Alex can finally breathe a sigh of relief. Well done!"
         };
+        hintsDictionary = new Dictionary<int, string[]> {
+            { 1, new string[] { "You need to find the name of a location. Use the SELECT statement.", "Look in the Locations table for the location where id equals 1.", "Use WHERE to specify the condition: id = 1 in the Locations table." } },
+            { 3, new string[] { "You need to find the name of a location. Use the SELECT statement.", "Look in the Locations table for the location where id equals 1.", "Use WHERE to specify the condition: id = 1 in the Locations table." } },
+            { 5, new string[] { "You need to find the name of a location. Use the SELECT statement.", "Look in the Locations table for the location where id equals 1.", "Use WHERE to specify the condition: id = 1 in the Locations table." } },
+            { 7, new string[] { "You need to find the name of a location. Use the SELECT statement.", "Look in the Locations table for the location where id equals 1.", "Use WHERE to specify the condition: id = 1 in the Locations table." } },
+        };
     }
 
     public void OnQuerySubmitted(string query)
@@ -43,48 +51,60 @@ public class GameController : MonoBehaviour
             case GameState.SightingQuery:
                 queryManager.ExecuteSightingQuery(query, HandleSightingQueryResults);
                 break;
-            // Add additional cases for other query types if needed
+                // Add additional cases for other query types if needed
         }
     }
 
- private void HandleLocationQueryResults(List<LocationResult> results)
+    private void HandleLocationQueryResults(List<LocationResult> results)
+    {
+        string resultText = results.Count > 0 ? results[0].name : "No results found.";
+        string expectedAnswer = expectedLocationAnswers[currentStoryIndex];
+        bool isCorrectAnswer = (results.Count == 1) && (results[0].name == expectedAnswer);
+
+        if (isCorrectAnswer)
+        {
+            // Correct answer, advance the story
+            uiManager.DisplayLocationResults(results);
+            AdvanceStory();
+        }
+        else
+        {
+            // Incorrect answer, do not advance the story
+            uiManager.DisplayResults(resultText + "\nThat's not the location we are looking for. Try again.");
+        }
+    }
+
+    private void HandleSightingQueryResults(List<SightingResult> results)
+    {
+        string resultText = results.Count > 0 ? "Location ID: " + results[0].location_id.ToString() + ", Witness ID: " + results[0].witness_id.ToString() + ", Time: " + results[0].Time.ToString() : "No sightings found.";
+        string expectedAnswer = expectedSightingAnswers[currentStoryIndex];
+        bool isCorrectAnswer = (results.Count == 1) && (results[0].location_id.ToString() == expectedAnswer);
+
+        if (isCorrectAnswer)
+        {
+            // Correct answer, advance the story
+            uiManager.DisplaySightingResults(results);
+            AdvanceStory();
+        }
+        else
+        {
+            // Incorrect answer, do not advance the story
+            uiManager.DisplayResults(resultText + "\nNo relevant sightings found. Try again.");
+        }
+    }
+
+    public void ShowHints()
 {
-    // Assuming "Classroom" is the expected answer for segment 1
-    string expectedAnswer = expectedLocationAnswers[currentStoryIndex];
-    bool isCorrectAnswer = (results.Count == 1) && (results[0].name == expectedAnswer);
+    if (!hintsDictionary.ContainsKey(currentStoryIndex))
+    {
+        Debug.LogError("No hints defined for this story segment.");
+        return;
+    }
 
-    if (isCorrectAnswer)
-    {
-        // Correct answer, advance the story
-        uiManager.DisplayLocationResults(results);
-        AdvanceStory();
-    }
-    else
-    {
-        // Incorrect answer, do not advance the story
-        uiManager.DisplayResults("That's not the location we are looking for. Try again.");
-    }
+    string[] hints = hintsDictionary[currentStoryIndex];
+    string hintMessage = string.Join("\n", hints);
+    uiManager.ShowHintBubble(hintMessage); // Show hint bubble
 }
-
-private void HandleSightingQueryResults(List<SightingResult> results)
-{
-    // Assuming "Library" is the expected answer for a certain segment
-    string expectedAnswer = expectedSightingAnswers[currentStoryIndex];
-    bool isCorrectAnswer = (results.Count == 1) && (results[0].location_id == expectedAnswer);
-
-    if (isCorrectAnswer)
-    {
-        // Correct answer, advance the story
-        uiManager.DisplaySightingResults(results);
-        AdvanceStory();
-    }
-    else
-    {
-        // Incorrect answer, do not advance the story
-        uiManager.DisplayResults("No relevant sightings found. Try again.");
-    }
-}
-
 
     public void AdvanceStory()
     {
@@ -93,35 +113,57 @@ private void HandleSightingQueryResults(List<SightingResult> results)
         {
             uiManager.DisplayNarrative(storySegments[currentStoryIndex]);
             UpdateGameState(); // Update game state based on new story segment
+            ShowContinueButtonIfNeeded(); // Decide whether to show the Continue button
         }
         else
         {
             uiManager.DisplayNarrative("Congratulations! You've solved the mystery.");
-            // Handle game completion
+            uiManager.ShowContinueButton(false); // Hide the Continue button after the game is complete
+                                                 // Handle game completion
         }
     }
 
     private void UpdateGameState()
     {
-        // Update the game state based on the current story segment
-        // For example:
-        if (currentStoryIndex == 2)
+        // Logic to update the game state based on the story segment
+        if (expectedLocationAnswers.ContainsKey(currentStoryIndex) ||
+            expectedSightingAnswers.ContainsKey(currentStoryIndex))
         {
-            currentState = GameState.SightingQuery;
+            // If the current story segment expects a query, we set the appropriate game state
+            currentState = expectedLocationAnswers.ContainsKey(currentStoryIndex) ?
+                GameState.LocationQuery : GameState.SightingQuery;
+            uiManager.ShowContinueButton(false); // Hide Continue button because a query is needed
         }
-        // Add additional logic to update the game state as needed
+        else
+        {
+            // If no query is expected, we do not change the game state and show the Continue button
+            currentState = GameState.None; // Or some other state indicating no query is needed
+            uiManager.ShowContinueButton(true); // Show Continue button
+        }
     }
+
+    private void ShowContinueButtonIfNeeded()
+    {
+        // Check if the current segment is in the dictionaries of expected answers
+        bool shouldShowContinueButton = !expectedLocationAnswers.ContainsKey(currentStoryIndex) &&
+                                        !expectedSightingAnswers.ContainsKey(currentStoryIndex);
+
+        uiManager.ShowContinueButton(shouldShowContinueButton);
+    }
+
+
 
     private Dictionary<int, string> expectedLocationAnswers = new Dictionary<int, string>
     {
-        { 1, "Classroom" }, // Assuming segment 2 expects "Jefferson Hall"
-        // Add other segment-to-answer mappings
+        { 1, "Classroom" },
+        { 5, "Cafeteria" },
     };
 
     private Dictionary<int, string> expectedSightingAnswers = new Dictionary<int, string>
     {
-        { 4, "Library" }, // Assuming segment 4 expects a sighting in "Library"
-        // Add other segment-to-answer mappings
+        { 3, "2"},
+        { 7, "Campus Security" }
+
     };
 }
 
@@ -129,7 +171,7 @@ private void HandleSightingQueryResults(List<SightingResult> results)
 
 public enum GameState
 {
+    None,
     LocationQuery,
     SightingQuery
-    // Add additional game states as needed
 }
