@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using UnityEngine.UI;
 using TMPro;
 using System.Text;
@@ -115,14 +116,36 @@ public class GameControllerHanoiTower : MonoBehaviour
 
         // Optionally, if you want to animate the disk movement, you could do so here.
         // For now, let's just set the disk's position above the target rod.
-        float diskHeight = 0.1f; // This should be the height of a disk
+        float diskHeight = 0.2f; // This should be the height of a disk
         int diskCount = targetRod.disksOnRod.Count;
         Vector3 newPosition = targetRod.transform.position + new Vector3(0, diskHeight * diskCount, 0);
         disk.transform.position = newPosition;
     }
+    private bool CheckForWin()
+    {
+        int minMovesToWin = (int)Math.Pow(2, 3) - 1;
+
+        // Check if all disks are on the last rod and move count is exactly minMovesToWin
+        if (rods[2].disksOnRod.Count == 3 && moveCount == minMovesToWin)
+        {
+            return true;
+        }
+        return false;
+    }
     private void UpdateMoveCountText()
     {
-        moveCountText.text = "Current number of moves: " + moveCount.ToString();
+        if(moveCount > ((int)Math.Pow(2, 3) - 1))
+        {
+            moveCountText.text = "         You lost!";
+        }
+        else if(CheckForWin())
+        {
+            moveCountText.text = "         You won!";
+        }
+        else 
+        {
+            moveCountText.text = "Current number of moves: " + moveCount.ToString();
+        }
     }
 
 }
