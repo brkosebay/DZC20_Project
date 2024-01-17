@@ -1,40 +1,39 @@
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class RodController : MonoBehaviour
-{
+public class RodController : MonoBehaviour {
     public List<GameObject> disksOnRod = new List<GameObject>();
-
-    public bool CanPlaceDisk(GameObject disk)
-    {
-        if (disksOnRod.Count == 0) return true; // The rod is empty
-
-        GameObject topDisk = disksOnRod[disksOnRod.Count - 1]; // Get the top disk on the rod
-        float topDiskSize = topDisk.transform.localScale.x; // Assuming disk size is determined by the x scale
-        float placingDiskSize = disk.transform.localScale.x;
-
-        return placingDiskSize < topDiskSize; // Can place if the new disk is smaller
-    }
-
 
     public void AddDisk(GameObject disk)
     {
         disksOnRod.Add(disk);
-        disk.transform.position = GetNextDiskPosition();
+        UpdateDiskPositions();
     }
 
-    public void RemoveDisk(GameObject disk)
+    public GameObject RemoveTopDisk()
     {
-        disksOnRod.Remove(disk);
+        if (disksOnRod.Count == 0) return null;
+        GameObject disk = disksOnRod[disksOnRod.Count - 1];
+        disksOnRod.RemoveAt(disksOnRod.Count - 1);
+        return disk;
     }
 
-    public Vector3 GetNextDiskPosition()
+    private void UpdateDiskPositions()
     {
-        float yOffset = 0.1f; // Adjust this based on the thickness of your disks
-        float height = disksOnRod.Count * yOffset; // Height is based on the number of disks
-        return new Vector3(transform.position.x, transform.position.y + height, transform.position.z);
+        // Update the position of each disk based on its order in the list
+        for (int i = 0; i < disksOnRod.Count; i++)
+        {
+            // Adjust this logic to set the position based on your game's layout
+            disksOnRod[i].transform.position = new Vector3(transform.position.x, transform.position.y + i, transform.position.z);
+        }
+    }
+
+    public bool CanReceiveDisk(GameObject disk)
+    {
+        if (disksOnRod.Count == 0) return true;
+        return disk.GetComponent<DiskController>().Size < disksOnRod[disksOnRod.Count - 1].GetComponent<DiskController>().Size;
     }
 
 }
