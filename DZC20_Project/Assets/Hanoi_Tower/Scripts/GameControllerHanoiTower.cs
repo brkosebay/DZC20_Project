@@ -10,6 +10,7 @@ public class GameControllerHanoiTower : MonoBehaviour
     public GameObject[] disksAndRods; 
     public GameObject instructionsText;
     public Button startButton; // Assign your start button here
+    public GameObject playMoveButton;
     public GameObject diskText;
     public GameObject rodText;
     public GameObject diskInputFieldGO;
@@ -17,12 +18,18 @@ public class GameControllerHanoiTower : MonoBehaviour
     public TMP_Dropdown diskDropdown;
     public TMP_Dropdown rodDropdown;
     public RodController[] rods; // Assign your rods in the inspector
-    private int moveCount = 0;
+    private int moveCount = 1;
     public TMP_Text moveCountText; // For Unity UI Text
-
 
     public void StartGame()
     {
+        // Hide instructions and start button
+        if (instructionsText != null)
+            instructionsText.SetActive(false);
+
+        if (startButton != null)
+            startButton.gameObject.SetActive(false);
+
         // Activate disks and rods
         foreach (var item in disksAndRods)
         {
@@ -35,12 +42,7 @@ public class GameControllerHanoiTower : MonoBehaviour
         diskInputFieldGO.SetActive(true);
         rodInputFieldGO.SetActive(true);
 
-        // Hide instructions and start button
-        if (instructionsText != null)
-            instructionsText.SetActive(false);
-
-        if (startButton != null)
-            startButton.gameObject.SetActive(false);
+        playMoveButton.SetActive(true);
     }
     public void PlayMove()
     {
