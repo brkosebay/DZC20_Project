@@ -1304,8 +1304,8 @@ MonoBehaviour:
   rodText: {fileID: 10203641}
   diskInputFieldGO: {fileID: 0}
   rodInputFieldGO: {fileID: 0}
-  diskInputField: {fileID: 0}
-  rodInputField: {fileID: 0}
+  diskDropdown: {fileID: 0}
+  rodDropdown: {fileID: 0}
   rods:
   - {fileID: 1725607008}
   - {fileID: 1065816270}
@@ -2142,6 +2142,7 @@ GameObject:
   m_Component:
   - component: {fileID: 853224978}
   - component: {fileID: 853224977}
+  - component: {fileID: 853224979}
   m_Layer: 0
   m_Name: MiddleDisk
   m_TagString: Untagged
@@ -2216,6 +2217,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 505213424}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &853224979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 853224976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf7abe6510505064db1270c6f92ecec9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Size: 2
+  diskIndex: 2
+  currentRod: {fileID: 1725607008}
 --- !u!1 &1065816267
 GameObject:
   m_ObjectHideFlags: 0
@@ -2907,6 +2923,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1237125555}
   - component: {fileID: 1237125554}
+  - component: {fileID: 1237125556}
   m_Layer: 0
   m_Name: SmallDisk
   m_TagString: Untagged
@@ -2981,6 +2998,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 505213424}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1237125556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237125553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf7abe6510505064db1270c6f92ecec9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Size: 1
+  diskIndex: 1
+  currentRod: {fileID: 1725607008}
 --- !u!1 &1303110915
 GameObject:
   m_ObjectHideFlags: 0
@@ -2991,6 +3023,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1303110917}
   - component: {fileID: 1303110916}
+  - component: {fileID: 1303110918}
   m_Layer: 0
   m_Name: BigDisk
   m_TagString: Untagged
@@ -3065,6 +3098,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 505213424}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1303110918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1303110915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf7abe6510505064db1270c6f92ecec9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Size: 3
+  diskIndex: 3
+  currentRod: {fileID: 1725607008}
 --- !u!1 &1325315920
 GameObject:
   m_ObjectHideFlags: 0
@@ -4496,7 +4544,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2010131545}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 265522169}
+        m_TargetAssemblyTypeName: GameControllerHanoiTower, Assembly-CSharp
+        m_MethodName: PlayMove
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2010131545
 MonoBehaviour:
   m_ObjectHideFlags: 0
