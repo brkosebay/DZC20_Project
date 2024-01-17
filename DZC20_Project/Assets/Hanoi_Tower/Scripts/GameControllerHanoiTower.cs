@@ -50,13 +50,14 @@ public class GameControllerHanoiTower : MonoBehaviour
             // Get the selected disk and rod
             RodController targetRod = rods[rodIndex];
             GameObject diskToMove = rods.SelectMany(rod => rod.disksOnRod)
-                                        .FirstOrDefault(disk => disk.GetComponent<DiskController>().diskIndex == diskIndex);
+                                        .FirstOrDefault(disk => disk.GetComponent<DiskController>().diskIndex == diskIndex+1);
 
             // Check if there's a disk to move and if the move is valid
-            if (diskToMove != null && IsValidMove(diskToMove, targetRod))
+            if (diskToMove != null && IsTopDisk(diskToMove) && IsValidMove(diskToMove, targetRod))
             {
                 // Perform the move
                 MoveDisk(diskToMove, targetRod);
+                Debug.Log("Disk selected:" + diskIndex + "Rod selected"+rodIndex);
             }
             else
             {
@@ -67,7 +68,7 @@ public class GameControllerHanoiTower : MonoBehaviour
         else
         {
             // Handle selection of default dropdown option (e.g., display a message to the player)
-            Debug.Log("Disk selected:" + diskIndex + "Rod selected"+rodIndex);
+            
             Debug.Log("Please select a disk and a target rod.");
         }
     }
@@ -81,7 +82,14 @@ public class GameControllerHanoiTower : MonoBehaviour
 
         return topDisk == null || diskController.Size < topDisk.GetComponent<DiskController>().Size;
     }
+    private bool IsTopDisk(GameObject disk)
+    {
+        DiskController diskController = disk.GetComponent<DiskController>();
+        RodController currentRod = diskController.currentRod;
 
+        // Check if the disk is the topmost disk on its current rod
+        return currentRod.GetTopDisk() == disk;
+    }
     private void MoveDisk(GameObject disk, RodController targetRod)
     {
         // Find the current rod of the disk
