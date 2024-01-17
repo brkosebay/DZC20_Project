@@ -39,6 +39,16 @@ public class UIManager : MonoBehaviour
         resultText.text = resultStringBuilder.ToString();
     }
 
+     public void DisplayClassResults(List<ClassResult> results)
+    {
+        StringBuilder resultStringBuilder = new StringBuilder();
+        foreach (var result in results)
+        {
+            resultStringBuilder.AppendLine(result.ToString());
+        }
+        resultText.text = resultStringBuilder.ToString();
+    }
+
     public void DisplaySightingResults(List<SightingResult> results)
     {
         StringBuilder resultStringBuilder = new StringBuilder();

@@ -17,31 +17,46 @@ public class QueryManager : MonoBehaviour
     }
 
     public void ExecuteLocationQuery(string query, System.Action<List<LocationResult>> onQueryExecuted)
-{
-    try
     {
-        var results = _database.Query<LocationResult>(query);
-        Debug.Log(results);
-        onQueryExecuted?.Invoke(results);
+        try
+        {
+            var results = _database.Query<LocationResult>(query);
+            Debug.Log(results);
+            onQueryExecuted?.Invoke(results);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Location Query Execution Error: " + e.Message);
+        }
     }
-    catch (System.Exception e)
-    {
-        Debug.LogError("Location Query Execution Error: " + e.Message);
-    }
-}
 
-public void ExecuteSightingQuery(string query, System.Action<List<SightingResult>> onQueryExecuted)
-{
-    try
+    public void ExecuteClassQuery(string query, System.Action<List<ClassResult>> onQueryExecuted)
     {
-        var results = _database.Query<SightingResult>(query);
-        onQueryExecuted?.Invoke(results);
+        try
+        {
+            var results = _database.Query<ClassResult>(query);
+            Debug.Log(results);
+            onQueryExecuted?.Invoke(results);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Class Query Execution Error: " + e.Message);
+        }
     }
-    catch (System.Exception e)
+
+    public void ExecuteSightingQuery(string query, System.Action<List<SightingResult>> onQueryExecuted)
     {
-        Debug.LogError("Sighting Query Execution Error: " + e.Message);
+        try
+        {
+            Debug.Log("Executing query: " + query);
+            var results = _database.Query<SightingResult>(query);
+            onQueryExecuted?.Invoke(results);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Sighting Query Execution Error: " + e.Message);
+        }
     }
-}
 
     private void OnDestroy()
     {
@@ -79,7 +94,7 @@ public class ProfessorResult
 
     public override string ToString()
     {
-        return "Professor Name: " + name ;
+        return "Professor Name: " + name;
     }
 }
 
@@ -96,12 +111,12 @@ public class StudentResult
 
 public class SightingResult
 {
-    public string Time { get; set; }
+    public string time { get; set; }
     public string location_id { get; set; }
     public string witness_id { get; set; }
     public override string ToString()
     {
-        return "Time: " + Time + ", Location ID: " + location_id + ", Witness ID: " + witness_id;
+        return "Time: " + time + ", Location ID: " + location_id + ", Witness ID: " + witness_id;
     }
 }
 
