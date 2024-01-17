@@ -1302,10 +1302,10 @@ MonoBehaviour:
   startButton: {fileID: 1676126323}
   diskText: {fileID: 1188777414}
   rodText: {fileID: 10203641}
-  diskInputFieldGO: {fileID: 0}
-  rodInputFieldGO: {fileID: 0}
-  diskDropdown: {fileID: 0}
-  rodDropdown: {fileID: 0}
+  diskInputFieldGO: {fileID: 1212358905}
+  rodInputFieldGO: {fileID: 101662689}
+  diskDropdown: {fileID: 1212358907}
+  rodDropdown: {fileID: 101662691}
   rods:
   - {fileID: 1725607008}
   - {fileID: 1065816270}
