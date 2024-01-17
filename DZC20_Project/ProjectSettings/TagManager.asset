@@ -15,6 +15,9 @@ TagManager:
   - Buildings
   - Player
   - 
+  - Disks
+  - Rod
+  - Background
   - 
   - 
   - 
@@ -50,4 +53,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 3262647711
+    locked: 0
+  - name: Rod
+    uniqueID: 3491393131
     locked: 0
