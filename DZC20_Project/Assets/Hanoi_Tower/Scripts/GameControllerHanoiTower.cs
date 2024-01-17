@@ -18,7 +18,7 @@ public class GameControllerHanoiTower : MonoBehaviour
     public TMP_Dropdown diskDropdown;
     public TMP_Dropdown rodDropdown;
     public RodController[] rods; // Assign your rods in the inspector
-    private int moveCount = 1;
+    private int moveCount = 0;
     public TMP_Text moveCountText; // For Unity UI Text
 
     public void StartGame()
@@ -136,13 +136,13 @@ public class GameControllerHanoiTower : MonoBehaviour
     }
     private void UpdateMoveCountText()
     {
-        if(moveCount > ((int)Math.Pow(2, 3) - 1))
-        {
-            moveCountText.text = "         You lost!";
-        }
-        else if(CheckForWin())
+        if(CheckForWin())
         {
             moveCountText.text = "         You won!";
+        }
+        else if(moveCount > ((int)Math.Pow(2, 3) - 1))
+        {
+            moveCountText.text = "         You lost!";
         }
         else 
         {
