@@ -16,6 +16,9 @@ public class GameControllerHanoiTower : MonoBehaviour
     public TMP_Dropdown diskDropdown;
     public TMP_Dropdown rodDropdown;
     public RodController[] rods; // Assign your rods in the inspector
+    private int moveCount = 0;
+    public TMP_Text moveCountText; // For Unity UI Text
+
 
     public void StartGame()
     {
@@ -57,6 +60,8 @@ public class GameControllerHanoiTower : MonoBehaviour
             {
                 // Perform the move
                 MoveDisk(diskToMove, targetRod);
+                moveCount++;
+                UpdateMoveCountText();
                 Debug.Log("Disk selected:" + diskIndex + "Rod selected"+rodIndex);
             }
             else
@@ -114,6 +119,10 @@ public class GameControllerHanoiTower : MonoBehaviour
         int diskCount = targetRod.disksOnRod.Count;
         Vector3 newPosition = targetRod.transform.position + new Vector3(0, diskHeight * diskCount, 0);
         disk.transform.position = newPosition;
+    }
+    private void UpdateMoveCountText()
+    {
+        moveCountText.text = "Current number of moves: " + moveCount.ToString();
     }
 
 }
