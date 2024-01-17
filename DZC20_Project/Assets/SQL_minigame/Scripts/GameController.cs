@@ -18,6 +18,7 @@ public class GameController : MonoBehaviour
         InitializeStorySegments();
         currentState = GameState.LocationQuery; // Set initial game state
         uiManager.DisplayNarrative(storySegments[currentStoryIndex]);
+        uiManager.DisplayExplanation(uiManager.explanationPages[0]);
     }
 
     void InitializeStorySegments()
