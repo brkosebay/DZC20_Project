@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.Experimental.GraphView;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -215,6 +216,14 @@ public class GameController : MonoBehaviour
         { 9, "4" }
 
     };
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("MenuMap");
+        }
+    }
 }
 
 

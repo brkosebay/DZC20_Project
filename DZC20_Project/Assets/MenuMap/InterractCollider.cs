@@ -11,7 +11,7 @@ public class ColliderTriggerScript : MonoBehaviour
             SceneManager.LoadScene("SqlScene");
         } else if (other.gameObject.name == "BuildingCollider (3)" || other.gameObject.name == "BuildingCollider (4)")
         {
-            // not yet
+            SceneManager.LoadScene("Hanoi Tower");
         } else if (other.gameObject.name == "BuildingCollider (5)")
         {
             // not yet

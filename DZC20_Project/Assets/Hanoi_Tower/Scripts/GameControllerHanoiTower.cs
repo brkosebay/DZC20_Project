@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Text;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class GameControllerHanoiTower : MonoBehaviour
 {
@@ -147,6 +148,14 @@ public class GameControllerHanoiTower : MonoBehaviour
         else 
         {
             moveCountText.text = "Current number of moves: " + moveCount.ToString();
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("MenuMap");
         }
     }
 
