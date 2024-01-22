@@ -124,7 +124,7 @@ public class GameControllerHanoiTower : MonoBehaviour
         // For now, let's just set the disk's position above the target rod.
         float diskHeight = 24f; // This should be the height of a disk
         int diskCount = targetRod.disksOnRod.Count;
-        Vector3 newPosition = targetRod.transform.position + new Vector3(0, (diskHeight+(diskHeight/3)) * diskCount, 0);
+        Vector3 newPosition = targetRod.transform.position + new Vector3(0, (diskHeight+(diskHeight/3)) * (diskCount-1), 0);
         disk.transform.position = newPosition;
     }
     private bool CheckForWin()
