@@ -32,8 +32,8 @@ public class RodController : MonoBehaviour {    // This list will store the Game
             return disksOnRod.Last();
         return null; // Return null if there are no disks
     }
-    public float baseOffset = 0.2f; // Offset from the rod's pivot to the base of the first disk
-    public float diskHeight = 3f; // Uniform height of each disk
+    public float baseOffset = 8f; // Offset from the rod's pivot to the base of the first disk
+    public float diskHeight = 24f; // Uniform height of each disk
 
     // Calculates the position for a disk based on the number of disks already on the rod
     public Vector3 CalculatePosition(GameObject disk)
@@ -47,6 +47,8 @@ public class RodController : MonoBehaviour {    // This list will store the Game
 
         // Calculate the y position based on the number of disks below this one
         float newYPosition = transform.position.y + baseOffset + index * diskHeight;
+
+        Debug.Log(newYPosition);
 
         // Return the new position
         return new Vector3(transform.position.x, newYPosition, transform.position.z);

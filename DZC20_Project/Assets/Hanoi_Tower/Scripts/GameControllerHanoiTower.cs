@@ -122,9 +122,9 @@ public class GameControllerHanoiTower : MonoBehaviour
 
         // Optionally, if you want to animate the disk movement, you could do so here.
         // For now, let's just set the disk's position above the target rod.
-        float diskHeight = 0.2f; // This should be the height of a disk
+        float diskHeight = 24f; // This should be the height of a disk
         int diskCount = targetRod.disksOnRod.Count;
-        Vector3 newPosition = targetRod.transform.position + new Vector3(0, diskHeight * diskCount, 0);
+        Vector3 newPosition = targetRod.transform.position + new Vector3(0, (diskHeight+(diskHeight/3)) * diskCount, 0);
         disk.transform.position = newPosition;
     }
     private bool CheckForWin()

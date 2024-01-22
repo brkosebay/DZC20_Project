@@ -3,6 +3,7 @@ using SQLite4Unity3d;
 using System.Text;
 using System.Collections.Generic;
 using System;
+using System.IO;
 
 public class QueryManager : MonoBehaviour
 {
@@ -12,8 +13,9 @@ public class QueryManager : MonoBehaviour
     void Start()
     {
         // Set the path to the database file
-        databasePath = Application.dataPath + "/SQL_minigame/laptopMysteryDatabase.db";
+        databasePath = Path.Combine(Application.streamingAssetsPath, "laptopMysteryDatabase.db");
         _database = new SQLiteConnection(databasePath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
+        Debug.Log(Application.streamingAssetsPath);
     }
 
     public void ExecuteLocationQuery(string query, System.Action<List<LocationResult>> onQueryExecuted)
