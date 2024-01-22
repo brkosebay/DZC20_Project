@@ -617,7 +617,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &29473781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1439,6 +1439,7 @@ MonoBehaviour:
   rodText: {fileID: 10203641}
   diskInputFieldGO: {fileID: 1212358905}
   rodInputFieldGO: {fileID: 101662689}
+  moveCountTextGO: {fileID: 29473780}
   diskDropdown: {fileID: 1212358907}
   rodDropdown: {fileID: 101662691}
   rods:
@@ -1593,6 +1594,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   disksOnRod: []
+  diskHeight: 5
+  baseOffset: 0.1
 --- !u!1 &505213423
 GameObject:
   m_ObjectHideFlags: 0
@@ -2326,7 +2329,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -803574165
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 16238c92a5e60094dab6b8b00b9da2d8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2467,6 +2470,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   disksOnRod: []
+  diskHeight: 5
+  baseOffset: 0.1
 --- !u!1 &1067514561
 GameObject:
   m_ObjectHideFlags: 0
@@ -3108,7 +3113,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -803574165
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 9058ab78c0738cf4986e9a65374efe17, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3208,7 +3213,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -803574165
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d9c2ddfb2499add44a6dcdba443f1bb3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4273,6 +4278,8 @@ MonoBehaviour:
   - {fileID: 1303110915}
   - {fileID: 853224976}
   - {fileID: 1237125553}
+  diskHeight: 5
+  baseOffset: 0.1
 --- !u!1 &1840560815
 GameObject:
   m_ObjectHideFlags: 0

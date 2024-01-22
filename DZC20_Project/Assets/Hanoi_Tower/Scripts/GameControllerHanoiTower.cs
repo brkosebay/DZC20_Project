@@ -16,6 +16,7 @@ public class GameControllerHanoiTower : MonoBehaviour
     public GameObject rodText;
     public GameObject diskInputFieldGO;
     public GameObject rodInputFieldGO;
+    public GameObject moveCountTextGO;
     public TMP_Dropdown diskDropdown;
     public TMP_Dropdown rodDropdown;
     public RodController[] rods; // Assign your rods in the inspector
@@ -39,6 +40,7 @@ public class GameControllerHanoiTower : MonoBehaviour
 
         diskText.SetActive(true);
         rodText.SetActive(true);
+        moveCountTextGO.SetActive(true);
         
         diskInputFieldGO.SetActive(true);
         rodInputFieldGO.SetActive(true);
@@ -131,6 +133,7 @@ public class GameControllerHanoiTower : MonoBehaviour
         // Check if all disks are on the last rod and move count is exactly minMovesToWin
         if (rods[2].disksOnRod.Count == 3 && moveCount == minMovesToWin)
         {
+            GameStateManager.Instance.CompleteMiniGame("HanoiTower");
             return true;
         }
         return false;
