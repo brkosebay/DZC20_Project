@@ -22,6 +22,7 @@ public class GameControllerHanoiTower : MonoBehaviour
     public RodController[] rods; // Assign your rods in the inspector
     private int moveCount = 0;
     public TMP_Text moveCountText; // For Unity UI Text
+    public bool chanegText = false;
 
     public void StartGame()
     {
@@ -133,7 +134,6 @@ public class GameControllerHanoiTower : MonoBehaviour
         // Check if all disks are on the last rod and move count is exactly minMovesToWin
         if (rods[2].disksOnRod.Count == 3 && moveCount == minMovesToWin)
         {
-            GameStateManager.Instance.CompleteMiniGame("HanoiTower");
             return true;
         }
         return false;
@@ -143,6 +143,8 @@ public class GameControllerHanoiTower : MonoBehaviour
         if(CheckForWin())
         {
             moveCountText.text = "         You won!";
+            GameStateManager.Instance.SetChangeTextStatus(true, "The next location is: Auditorium");
+            SceneManager.LoadScene("MenuMap");
         }
         else if(moveCount > ((int)Math.Pow(2, 3) - 1))
         {

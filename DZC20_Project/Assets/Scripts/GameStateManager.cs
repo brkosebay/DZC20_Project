@@ -1,32 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameStateManager : MonoBehaviour
 {
     public static GameStateManager Instance;
+    private List<string> completedMiniGames = new List<string>();
+    private Dictionary<string, string> miniGameToLocationMap = new Dictionary<string, string>();
+    
+    public bool changeText = false;
+    public string newTextForPanel; // Store the new text for the panel
 
-    private void Awake()
+    void Awake()
     {
-        // Singleton pattern to ensure only one instance
-        if (Instance == null) { Instance = this; }
-        else { Destroy(gameObject); }
-
-        DontDestroyOnLoad(gameObject);
-    }
-
-    public List<string> completedMiniGames = new List<string>();
-
-    public void CompleteMiniGame(string miniGameName)
-    {
-        if (!completedMiniGames.Contains(miniGameName))
+        if (Instance == null)
         {
-            completedMiniGames.Add(miniGameName);
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
         }
     }
 
-    public bool IsMiniGameCompleted(string miniGameName)
+    public void SetChangeTextStatus(bool status, string newText = "")
     {
-        return completedMiniGames.Contains(miniGameName);
+        changeText = status;
+        newTextForPanel = newText;
     }
 }
