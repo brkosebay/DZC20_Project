@@ -30,4 +30,8 @@ public class GameStateManager : MonoBehaviour
         changeText = status;
         newTextForPanel = newText;
     }
+    public bool AudiUnlocked()
+    {
+        return changeText;
+    }
 }
