@@ -7,8 +7,15 @@ public class ColliderTriggerScript : MonoBehaviour
     {
         if (other.gameObject.name == "BuildingCollider")
         {
+            if (!GameStateManager.Instance.AudiUnlocked())
+            {
+                ProgressionUIManager.Instance.ShowErrorMessage();
+            }
             // Replace "YourSceneName" with the name of the scene you want to load
-            SceneManager.LoadScene("SqlScene");
+            else
+            {
+                SceneManager.LoadScene("SqlScene");
+            }
         } else if (other.gameObject.name == "BuildingCollider (3)" || other.gameObject.name == "BuildingCollider (4)")
         {
             SceneManager.LoadScene("Hanoi Tower");

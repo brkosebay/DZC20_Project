@@ -16,11 +16,13 @@ public class GameControllerHanoiTower : MonoBehaviour
     public GameObject rodText;
     public GameObject diskInputFieldGO;
     public GameObject rodInputFieldGO;
+    public GameObject moveCountTextGO;
     public TMP_Dropdown diskDropdown;
     public TMP_Dropdown rodDropdown;
     public RodController[] rods; // Assign your rods in the inspector
     private int moveCount = 0;
     public TMP_Text moveCountText; // For Unity UI Text
+    public bool chanegText = false;
 
     public void StartGame()
     {
@@ -39,6 +41,7 @@ public class GameControllerHanoiTower : MonoBehaviour
 
         diskText.SetActive(true);
         rodText.SetActive(true);
+        moveCountTextGO.SetActive(true);
         
         diskInputFieldGO.SetActive(true);
         rodInputFieldGO.SetActive(true);
@@ -119,9 +122,9 @@ public class GameControllerHanoiTower : MonoBehaviour
 
         // Optionally, if you want to animate the disk movement, you could do so here.
         // For now, let's just set the disk's position above the target rod.
-        float diskHeight = 0.2f; // This should be the height of a disk
+        float diskHeight = 24f; // This should be the height of a disk
         int diskCount = targetRod.disksOnRod.Count;
-        Vector3 newPosition = targetRod.transform.position + new Vector3(0, diskHeight * diskCount, 0);
+        Vector3 newPosition = targetRod.transform.position + new Vector3(0, (diskHeight+(diskHeight/3)) * (diskCount-1), 0);
         disk.transform.position = newPosition;
     }
     private bool CheckForWin()
@@ -140,6 +143,8 @@ public class GameControllerHanoiTower : MonoBehaviour
         if(CheckForWin())
         {
             moveCountText.text = "         You won!";
+            GameStateManager.Instance.SetChangeTextStatus(true, "The next location is: Auditorium");
+            SceneManager.LoadScene("MenuMap");
         }
         else if(moveCount > ((int)Math.Pow(2, 3) - 1))
         {
