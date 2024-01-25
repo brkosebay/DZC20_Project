@@ -407,6 +407,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 5
+  inputs: []
+  output: 0
   connectedGates: []
 --- !u!1 &62518613
 GameObject:
@@ -443,7 +445,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 151, y: 89}
+  m_AnchoredPosition: {x: 103.000015, y: 10.999996}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &62518615
@@ -568,7 +570,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -605, y: -23}
+  m_AnchoredPosition: {x: -584, y: -49.999992}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &285786786
@@ -622,6 +624,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
+  inputs: []
+  output: 0
   connectedGates: []
 --- !u!114 &285786789
 MonoBehaviour:
@@ -790,6 +794,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 4
+  inputs: []
+  output: 0
   connectedGates: []
 --- !u!1 &488602862
 GameObject:
@@ -1679,7 +1685,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00001359, y: 171}
+  m_AnchoredPosition: {x: 0.00001359, y: 137}
   m_SizeDelta: {x: 352.9211, y: 42.3172}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &777588042
@@ -2004,7 +2010,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -605, y: 164}
+  m_AnchoredPosition: {x: -584, y: 157}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &906191304
@@ -2075,6 +2081,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  inputs: []
+  output: 0
   connectedGates: []
 --- !u!1 &1009381476
 GameObject:
@@ -2468,6 +2476,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 6
+  inputs: []
+  output: 0
   connectedGates: []
 --- !u!1 &1270587662
 GameObject:
@@ -2705,7 +2715,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 151, y: 164}
+  m_AnchoredPosition: {x: 103.000015, y: 104.000015}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1342188881
@@ -2917,6 +2927,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 3
+  inputs: []
+  output: 0
   connectedGates: []
 --- !u!1 &1361345621
 GameObject:
@@ -3028,7 +3040,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 151, y: 234}
+  m_AnchoredPosition: {x: 103, y: 203.99998}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1374127442
@@ -3454,7 +3466,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 45, y: 89}
+  m_AnchoredPosition: {x: 28, y: 63}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1797262659
@@ -3508,6 +3520,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
+  inputs: []
+  output: 0
   connectedGates: []
 --- !u!114 &1797262662
 MonoBehaviour:
@@ -3644,7 +3658,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 326.1, y: -127.5}
+  m_AnchoredPosition: {x: 278, y: -174}
   m_SizeDelta: {x: 90, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1928174937
@@ -3816,7 +3830,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 151, y: 13}
+  m_AnchoredPosition: {x: 103, y: -89}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2006637155
@@ -3921,6 +3935,9 @@ MonoBehaviour:
   possibleInputs: {fileID: 488602864}
   problemText: {fileID: 777588042}
   gateSelectionParent: {fileID: 1541869572}
+  inputX: {fileID: 0}
+  inputY: {fileID: 0}
+  outputZ: {fileID: 0}
   wirePrefab: {fileID: 763985528}
 --- !u!1 &2110560197
 GameObject:
@@ -3961,8 +3978,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.7901001, y: 15.097046}
-  m_SizeDelta: {x: -360.0354, y: -212.63}
+  m_AnchoredPosition: {x: 0.10470581, y: -1.7453}
+  m_SizeDelta: {x: -419.026, y: -178.9453}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2110560199
 MonoBehaviour:

@@ -21,7 +21,7 @@ public class ColliderTriggerScript : MonoBehaviour
             SceneManager.LoadScene("Hanoi Tower");
         } else if (other.gameObject.name == "BuildingCollider (5)")
         {
-            // not yet
+            SceneManager.LoadScene("LogicGatesScene");
         }
     }
 }
